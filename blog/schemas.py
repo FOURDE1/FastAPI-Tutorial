@@ -1,12 +1,15 @@
 from pydantic import BaseModel;
 from sqlalchemy.orm import relationship;
-from typing import List;
+from typing import List,Optional
 
-class User(BaseModel):
+class UserBase(BaseModel):
     name:str;
     email:str;
     password:str;
 
+class User(BaseModel):
+    name:str;
+    email:str;  
 
 class BlogBase(BaseModel):
     title:str;
@@ -31,8 +34,24 @@ class ShowUser(BaseModel):
 class ShowBlog(BaseModel):
     title:str;
     body:str;
-    creator:ShowUser;
+    creator:User;
    
     class Config():
         from_attributes = True;
 
+
+
+
+class Login(BaseModel):
+    username:str;
+    password:str;
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    email: str | None = None
+    
